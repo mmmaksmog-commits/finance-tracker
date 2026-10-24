@@ -1,0 +1,119 @@
+<!doctype html>
+<html lang="ru">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Финтрек</title>
+  <meta name="description" content="Трекер личных финансов: доходы, расходы, графики по категориям. Работает офлайн.">
+  <meta name="theme-color" content="#f6f7fb" media="(prefers-color-scheme: light)">
+  <meta name="theme-color" content="#0f1117" media="(prefers-color-scheme: dark)">
+  <link rel="icon" href="icon.svg" type="image/svg+xml">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <header class="topbar">
+    <div class="brand"><img src="icon.svg" alt="" width="28" height="28"> Финтрек</div>
+    <div class="month">
+      <button class="icon-btn" id="prevMonth" aria-label="Предыдущий месяц">‹</button>
+      <span id="monthLabel" class="month__label"></span>
+      <button class="icon-btn" id="nextMonth" aria-label="Следующий месяц">›</button>
+    </div>
+    <div class="topbar__actions">
+      <button class="icon-btn" id="exportBtn" title="Экспорт в CSV" aria-label="Экспорт в CSV">⇩</button>
+      <button class="icon-btn" id="themeBtn" title="Сменить тему" aria-label="Сменить тему">◐</button>
+    </div>
+  </header>
+
+  <div class="demo-banner" id="demoBanner" hidden>
+    <span>Сейчас показаны демо-данные, чтобы было что посмотреть.</span>
+    <button class="link-btn" id="clearDemo">Начать с чистого листа</button>
+  </div>
+
+  <main class="layout">
+    <section class="summary">
+      <article class="stat stat--balance">
+        <span class="stat__label">Баланс за месяц</span>
+        <strong class="stat__value" id="balance">0 ₽</strong>
+      </article>
+      <article class="stat">
+        <span class="stat__label">Доходы</span>
+        <strong class="stat__value is-income" id="income">0 ₽</strong>
+      </article>
+      <article class="stat">
+        <span class="stat__label">Расходы</span>
+        <strong class="stat__value is-expense" id="expense">0 ₽</strong>
+      </article>
+    </section>
+
+    <section class="card charts">
+      <div class="chart-box">
+        <h2 class="card__title">Расходы по категориям</h2>
+        <div class="donut-wrap">
+          <canvas id="donut" aria-label="Расходы по категориям" role="img"></canvas>
+          <p class="empty" id="donutEmpty" hidden>Расходов в этом месяце нет</p>
+        </div>
+        <ul class="legend" id="legend"></ul>
+      </div>
+      <div class="chart-box">
+        <h2 class="card__title">Последние 6 месяцев</h2>
+        <div class="bar-wrap"><canvas id="bars" aria-label="Доходы и расходы по месяцам" role="img"></canvas></div>
+      </div>
+    </section>
+
+    <section class="card list-card">
+      <div class="list-head">
+        <h2 class="card__title">Операции</h2>
+        <div class="filters">
+          <div class="segmented" role="tablist" id="typeFilter">
+            <button data-filter="all" class="is-active">Все</button>
+            <button data-filter="income">Доходы</button>
+            <button data-filter="expense">Расходы</button>
+          </div>
+          <input type="search" id="search" class="input input--sm" placeholder="Поиск…" aria-label="Поиск">
+        </div>
+      </div>
+      <div id="list" class="tx-list"></div>
+    </section>
+
+    <!-- Форма: на ПК — карточка сбоку, на телефоне — выезжающая панель -->
+    <section class="card sheet" id="sheet" aria-labelledby="formTitle">
+      <div class="sheet__handle" aria-hidden="true"></div>
+      <h2 class="card__title" id="formTitle">Новая операция</h2>
+      <form id="txForm" class="form">
+        <div class="segmented segmented--lg" id="typeSwitch">
+          <button type="button" data-type="expense" class="is-active">Расход</button>
+          <button type="button" data-type="income">Доход</button>
+        </div>
+        <label class="field">
+          <span>Сумма, ₽</span>
+          <input class="input input--amount" name="amount" type="number" inputmode="decimal" min="0.01" step="0.01" placeholder="0" required>
+        </label>
+        <div class="field">
+          <span>Категория</span>
+          <div class="cats" id="cats"></div>
+        </div>
+        <label class="field">
+          <span>Дата</span>
+          <input class="input" name="date" type="date" required>
+        </label>
+        <label class="field">
+          <span>Комментарий</span>
+          <input class="input" name="note" maxlength="60" placeholder="Например, кофе">
+        </label>
+        <button class="btn btn--primary" type="submit">Добавить</button>
+      </form>
+    </section>
+  </main>
+
+  <button class="fab" id="fab" aria-label="Добавить операцию">+</button>
+  <div class="backdrop" id="backdrop" hidden></div>
+  <div class="toast" id="toast" role="status" hidden></div>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>
