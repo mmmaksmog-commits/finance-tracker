@@ -2,7 +2,7 @@
 
 **Трекер личных финансов: доходы, расходы и наглядные графики. Работает офлайн, устанавливается на телефон как приложение.**
 
-### ▶️ [Открыть приложение](https://YOUR_GITHUB.github.io/finance-tracker/)
+### ▶️ [Открыть приложение](https://mmmaksmog-commits.github.io/finance-tracker/)
 
 При первом запуске показываются демо-данные за полгода. Их можно убрать одной кнопкой.
 
@@ -39,7 +39,7 @@ sw.js          # офлайн-кэш
 ## Запуск локально
 
 ```bash
-git clone https://github.com/YOUR_GITHUB/finance-tracker.git
+git clone https://github.com/mmmaksmog-commits/finance-tracker.git
 cd finance-tracker
 python3 -m http.server 8000
 ```
